@@ -1,0 +1,164 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+<div class="topics-container">
+    <h2 class="page-title">Topics</h2>
+
+    <div class="topics-list">
+        {% for topic in topics %}
+            <div class="topic-item">
+                <a href="{% url 'learning_logs:topic' topic.id %}" class="topic-link">
+                    📁 {{ topic }}
+                </a>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <p>No topics yet ¯\_(ツ)_/¯</p>
+                <p class="empty-hint">Start by adding your first topic!</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="add-topic-section">
+        <a href="{% url 'learning_logs:new_topic' %}" class="btn btn-primary">
+            ＋ Add a new topic
+        </a>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary: #2E7D32;
+        --primary-light: #4CAF50;
+        --secondary: #388E3C;
+        --light: #E8F5E9;
+        --dark: #1B5E20;
+        --accent: #81C784;
+        --text: #1E1E1E;
+        --text-light: #666;
+    }
+
+    .topics-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        color: var(--dark);
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--accent);
+    }
+
+    .topics-list {
+        margin-bottom: 2rem;
+    }
+
+    .topic-item {
+        background: white;
+        border: 2px solid var(--accent);
+        border-radius: 8px;
+        margin-bottom: 0.75rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.08);
+    }
+
+    .topic-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+        border-left: 4px solid var(--primary);
+        background-color: var(--light);
+    }
+
+    .topic-link {
+        color: var(--dark);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.1rem;
+        display: block;
+        transition: color 0.3s ease;
+    }
+
+    .topic-link:hover {
+        color: var(--primary);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: var(--light);
+        border-radius: 10px;
+        border: 2px dashed var(--accent);
+    }
+
+    .empty-state p {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        margin: 0;
+    }
+
+    .empty-hint {
+        font-size: 1rem !important;
+        margin-top: 0.5rem !important;
+        color: var(--primary-light) !important;
+    }
+
+    .add-topic-section {
+        text-align: center;
+        padding: 2rem 0;
+        border-top: 1px solid var(--accent);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        display: inline-block;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        color: white;
+    }
+
+    /* Анимация для появления элементов */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topic-item {
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    .topic-item:nth-child(1) { animation-delay: 0.1s; }
+    .topic-item:nth-child(2) { animation-delay: 0.2s; }
+    .topic-item:nth-child(3) { animation-delay: 0.3s; }
+    .topic-item:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .topics-container {
+            padding: 0 1rem;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .topic-link {
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock content %}

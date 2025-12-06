@@ -1,0 +1,147 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+<div class="new-topic-container">
+    <div class="topic-form">
+        <h2 class="form-title">Add a New Topic</h2>
+
+        <form action="{% url 'learning_logs:new_topic' %}" method='post'>
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_text">Topic Name:</label>
+                <input type="text" name="text" id="id_text" class="form-input" placeholder="Enter topic name..." required maxlength="200">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" name="submit" class="btn btn-primary">Add Topic</button>
+                <a href="{% url 'learning_logs:topics' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary: #2E7D32;
+        --primary-light: #4CAF50;
+        --secondary: #388E3C;
+        --light: #E8F5E9;
+        --dark: #1B5E20;
+        --accent: #81C784;
+        --text: #1E1E1E;
+        --text-light: #666;
+    }
+
+    .new-topic-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .topic-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(46, 125, 50, 0.1);
+        border: 2px solid var(--accent);
+    }
+
+    .form-title {
+        color: var(--dark);
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--accent);
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        color: var(--dark);
+        font-size: 1.1rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid var(--accent);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background-color: white;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    }
+
+    .form-input::placeholder {
+        color: var(--text-light);
+        opacity: 0.7;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn {
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+    }
+
+    .btn-secondary {
+        background: var(--primary-light);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .form-actions {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock content %}

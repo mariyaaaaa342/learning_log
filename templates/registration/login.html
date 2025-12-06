@@ -1,0 +1,137 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-form">
+        <h2 class="form-title">Log in to your account</h2>
+
+        {% if form.errors %}
+            <div class="error-message">
+                <p>Your username and password didn't match. Please try again.</p>
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'users:login' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" id="id_username" required class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" required class="form-input">
+            </div>
+
+            <button type="submit" name="submit" class="btn btn-primary btn-full">Log in</button>
+            <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"/>
+        </form>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .login-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        text-align: center;
+        color: #333;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f1f3f4;
+    }
+
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 6px;
+        border: 1px solid #f5c6cb;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .error-message p {
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-full {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Адаптивность */
+    @media (max-width: 480px) {
+        .login-container {
+            padding: 1rem;
+        }
+
+        .login-form {
+            padding: 1.5rem;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock content %}

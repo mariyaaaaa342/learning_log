@@ -1,0 +1,5 @@
+{% extends "learning_logs/base.html" %}
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %} #csrf_token is very important to have as this is POST request
+    <button type="submit">Logout</button>
+</form>

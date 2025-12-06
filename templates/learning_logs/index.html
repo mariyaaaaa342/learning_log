@@ -1,0 +1,314 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+<div class="index-container">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Learning Log</h1>
+            <p class="hero-subtitle">Your personal knowledge companion</p>
+            <p class="hero-description">Learning Log helps you track your learning journey, organize topics, and record valuable insights along the way.</p>
+
+            {% if not user.is_authenticated %}
+            <div class="hero-actions">
+                <a href="{% url 'users:register' %}" class="btn btn-primary btn-large">Get Started</a>
+                <a href="{% url 'users:login' %}" class="btn btn-secondary btn-large">Sign In</a>
+            </div>
+            {% else %}
+            <div class="hero-actions">
+                <a href="{% url 'learning_logs:topics' %}" class="btn btn-primary btn-large">View Topics</a>
+                <a href="{% url 'learning_logs:new_topic' %}" class="btn btn-secondary btn-large">Create Topic</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="hero-visual">
+            <div class="decorative-element">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-3"></div>
+                <div class="notebook-icon">📘</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <h2 class="section-title">Why Choose Learning Log?</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Organize Notes</h3>
+                <p>Create structured topics and keep your learning materials organized in one place.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Track Progress</h3>
+                <p>Monitor your learning journey and see how far you've come with each topic.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>Capture Ideas</h3>
+                <p>Never lose a brilliant insight - record your thoughts and ideas as you learn.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary: #2E7D32;
+        --primary-light: #4CAF50;
+        --secondary: #388E3C;
+        --light: #E8F5E9;
+        --dark: #1B5E20;
+        --accent: #81C784;
+        --text: #1E1E1E;
+        --text-light: #666;
+    }
+
+    .index-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 4rem;
+        padding: 2rem 0;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-secondary {
+        background: var(--primary-light);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background: var(--secondary);
+    }
+
+    .hero-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .decorative-element {
+        position: relative;
+        width: 300px;
+        height: 300px;
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.1) 100%);
+    }
+
+    .circle-1 {
+        width: 200px;
+        height: 200px;
+        top: 20px;
+        left: 20px;
+    }
+
+    .circle-2 {
+        width: 150px;
+        height: 150px;
+        top: 60px;
+        left: 60px;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.2) 0%, rgba(76, 175, 80, 0.2) 100%);
+    }
+
+    .circle-3 {
+        width: 100px;
+        height: 100px;
+        top: 90px;
+        left: 90px;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.3) 0%, rgba(76, 175, 80, 0.3) 100%);
+    }
+
+    .notebook-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        z-index: 2;
+        color: var(--primary);
+    }
+
+    .features-section {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.1);
+        border: 2px solid var(--accent);
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        color: var(--dark);
+        margin-bottom: 3rem;
+        font-weight: 600;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .feature-card {
+        text-align: center;
+        padding: 2rem;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: var(--light);
+        border: 2px solid transparent;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(76, 175, 80, 0.15);
+        border-color: var(--primary);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+
+    .feature-card h3 {
+        color: var(--dark);
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .feature-card p {
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 968px) {
+        .hero-section {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .decorative-element {
+            width: 250px;
+            height: 250px;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+        }
+
+        .circle-2 {
+            width: 120px;
+            height: 120px;
+        }
+
+        .circle-3 {
+            width: 80px;
+            height: 80px;
+        }
+
+        .notebook-icon {
+            font-size: 3rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-actions {
+            justify-content: center;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .hero-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-large {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock content %}

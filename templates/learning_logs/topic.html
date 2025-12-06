@@ -1,0 +1,236 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+    <div class="topic-detail-container">
+        <div class="topic-header">
+            <h2 class="topic-title">Topic: {{ topic }}</h2>
+            <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-primary">
+                ＋ Add New Entry
+            </a>
+        </div>
+
+        <div class="entries-section">
+            <h3 class="section-title">Entries</h3>
+
+            {% if entries %}
+                <div class="entries-list">
+                    {% for entry in entries %}
+                        <div class="entry-card">
+                            <div class="entry-header">
+                            <span class="entry-date">
+                                📅 {{ entry.date_added|date:'M d, Y H:i' }}
+                            </span>
+                            </div>
+                            <div class="entry-content">
+                                <p>{{ entry.text|linebreaks }}</p>
+                                <p>
+                                    <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p>There are no entries for this topic yet ¯\_(ツ)_/¯</p>
+                    <p class="empty-hint">Click "Add New Entry" to get started!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <style>
+        :root {
+        --primary: #2E7D32;
+        --primary-light: #4CAF50;
+        --secondary: #388E3C;
+        --light: #E8F5E9;
+        --dark: #1B5E20;
+        --accent: #81C784;
+        --text: #1E1E1E;
+        --text-light: #666;
+    }
+
+    .topic-detail-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .topic-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--accent);
+    }
+
+    .topic-title {
+        color: var(--dark);
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .section-title {
+        color: var(--secondary);
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--accent);
+    }
+
+    .entries-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .entry-card {
+        background: white;
+        border: 2px solid var(--accent);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(76, 175, 80, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .entry-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.15);
+        border-color: var(--primary);
+        background-color: var(--light);
+    }
+
+    .entry-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--accent);
+    }
+
+    .entry-date {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .entry-content {
+        color: var(--text);
+        line-height: 1.6;
+    }
+
+    .entry-content p {
+        margin: 0;
+    }
+
+    .entry-content a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .entry-content a:hover {
+        color: var(--dark);
+        text-decoration: underline;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: var(--light);
+        border-radius: 12px;
+        border: 2px dashed var(--accent);
+        margin: 2rem 0;
+    }
+
+    .empty-state p {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        margin: 0;
+    }
+
+    .empty-hint {
+        font-size: 0.95rem !important;
+        margin-top: 0.5rem !important;
+        color: var(--primary-light) !important;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(46, 125, 50, 0.4);
+        color: white;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .entry-card {
+        animation: slideIn 0.5s ease forwards;
+    }
+
+    .entry-card:nth-child(1) { animation-delay: 0.1s; }
+    .entry-card:nth-child(2) { animation-delay: 0.2s; }
+    .entry-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @media (max-width: 768px) {
+        .topic-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .topic-title {
+            font-size: 1.5rem;
+        }
+
+        .entry-card {
+            padding: 1rem;
+        }
+
+        .entry-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+    }
+
+    .entry-content {
+        font-size: 1rem;
+        color: var(--text);
+    }
+
+    .entry-content p {
+        margin-bottom: 0.5rem;
+    }
+
+    .entry-content p:last-child {
+        margin-bottom: 0;
+    }
+    </style>
+{% endblock content %}
